@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sumaiya Ahmed — AI Developer • Data Analyst</title>
+  <meta name="description" content="Animated single‑file portfolio for Sumaiya Ahmed — AI Developer & Data Analyst" />
+  <style>
+    :root {
+      --bg: #0b1220;           /* slate‑950-ish */
+      --bg-soft: #0f172a;      /* slate‑900 */
+      --text: #e5e7eb;         /* slate‑200 */
+      --muted: #94a3b8;        /* slate‑400 */
+      --card: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.12);
+      --chip: rgba(255,255,255,0.12);
+      --shadow: 0 20px 40px rgba(0,0,0,0.35);
+      --radius-xl: 20px;
+      --radius-2xl: 28px;
+      --container: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* —— Animated gradient blobs —— */
+    .blobs { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+    .blob { position: absolute; filter: blur(64px); opacity: .6; border-radius: 999px; }
+    .blob.fuchsia { background: radial-gradient(circle at 30% 30%, rgba(217,70,239,.6), transparent 60%); }
+    .blob.cyan { background: radial-gradient(circle at 70% 70%, rgba(34,211,238,.55), transparent 60%); }
+    .blob.animate1 { width: 380px; height: 380px; top: -10%; left: -8%; animation: float1 18s ease-in-out infinite; }
+    .blob.animate2 { width: 420px; height: 420px; bottom: -12%; right: -10%; animation: float2 22s ease-in-out infinite; }
+    @keyframes float1 { 0%{transform:translate(0,0)} 25%{transform:translate(40px,-30px)} 50%{transform:translate(-20px,10px)} 75%{transform:translate(10px,20px)} 100%{transform:translate(0,0)} }
+    @keyframes float2 { 0%{transform:translate(0,0)} 25%{transform:translate(-50px,40px)} 50%{transform:translate(30px,-20px)} 75%{transform:translate(-10px,-10px)} 100%{transform:translate(0,0)} }
+
+    /* —— Layout —— */
+    .container { width: min(100%, var(--container)); margin: 0 auto; padding: 0 24px; }
+    section { padding: 88px 0; }
+
+    /* —— Header / Nav —— */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,0.55);
+      border-bottom: 1px solid var(--card-border);
+    }
+    nav { height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { font-weight: 700; letter-spacing: .02em; display: inline-flex; align-items: center; gap: 10px; }
+    .brand .logo { display:inline-grid; place-items:center; width: 28px; height: 28px; border-radius: 10px; background: linear-gradient(135deg, rgba(217,70,239,.5), rgba(34,211,238,.45)); box-shadow: var(--shadow); font-size: 16px; }
+    .navlinks { display: none; gap: 18px; }
+    .navlinks a { color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color .15s ease; }
+    .navlinks a:hover { color: #fff; }
+    @media (min-width: 780px) { .navlinks { display: flex; } }
+
+    /* —— Hero —— */
+    .hero { display: grid; gap: 36px; align-items: center; }
+    @media (min-width: 900px) { .hero { grid-template-columns: 1.2fr 1fr; gap: 48px; } }
+    .headline { font-size: clamp(32px, 5vw, 56px); line-height: 1.1; font-weight: 800; }
+    .subtitle { font-size: clamp(16px, 2vw, 20px); color: #c7d2fe; }
+    .muted { color: var(--muted); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .chip { display:inline-flex; align-items:center; gap:8px; border: 1px solid var(--card-border); background: var(--chip); color: #dbeafe; border-radius: 999px; padding: 8px 12px; font-size: 12px; text-decoration: none; }
+
+    .feature-card { position: relative; border-radius: var(--radius-2xl); padding: 18px; background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); border: 1px solid var(--card-border); box-shadow: var(--shadow); }
+    .feature-inner { display:grid; place-items:center; height: 260px; border-radius: calc(var(--radius-2xl) - 6px); background: rgba(15,23,42,0.85); }
+    .wobble { animation: wobble 8s ease-in-out infinite; text-align:center; padding: 0 24px; }
+    @keyframes wobble { 0%{transform:rotate(0)} 25%{transform:rotate(4deg)} 50%{transform:rotate(-4deg)} 75%{transform:rotate(2deg)} 100%{transform:rotate(0)} }
+
+    /* —— Cards / Sections —— */
+    .section-title { font-size: 28px; font-weight: 800; margin: 0 0 20px; }
+    .card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow); }
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    @media (min-width: 800px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1000px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+    .pill { display:inline-block; padding: 6px 10px; font-size: 10px; letter-spacing: .06em; border-radius: 999px; text-transform: uppercase; background: rgba(255,255,255,.14); border: 1px solid var(--card-border); }
+
+    /* —— Footer —— */
+    footer { text-align: center; color: var(--muted); font-size: 12px; padding: 56px 0 24px; }
+
+    /* —— Utilities —— */
+    .row { display:flex; align-items:center; justify-content:space-between; gap: 16px; flex-wrap: wrap; }
+    .list { margin: 12px 0 0 18px; padding: 0; }
+    .list li { margin: 6px 0; }
+    .mb-8 { margin-bottom: 32px; }
+    .mt-2 { margin-top: 8px; }
+    .mt-4 { margin-top: 16px; }
+    .center { text-align:center; }
+    .hidden-note { font-size: 12px; color: var(--muted); }
+    .contact-actions { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:16px; }
+
+    /* reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(16px); transition: 700ms ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+  <!-- Background blobs -->
+  <div class="blobs" aria-hidden="true">
+    <div class="blob fuchsia animate1"></div>
+    <div class="blob cyan animate2"></div>
+  </div>
+
+  <!-- Header / Nav -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#home" class="brand" onclick="scrollToId('home'); return false;">
+          <span class="logo">✨</span>
+          <span>SA</span>
+        </a>
+        <div class="navlinks">
+          <a href="#about" onclick="scrollToId('about'); return false;">About</a>
+          <a href="#skills" onclick="scrollToId('skills'); return false;">Skills</a>
+          <a href="#experience" onclick="scrollToId('experience'); return false;">Experience</a>
+          <a href="#projects" onclick="scrollToId('projects'); return false;">Projects</a>
+          <a href="#education" onclick="scrollToId('education'); return false;">Education</a>
+          <a href="#contact" onclick="scrollToId('contact'); return false;">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home">
+    <div class="container hero">
+      <div class="reveal">
+        <p class="muted" style="letter-spacing:.25em; text-transform:uppercase; font-size:12px">Hello, I am</p>
+        <h1 class="headline">Sumaiya Ahmed</h1>
+        <p class="subtitle">AI Developer • Data Analyst</p>
+        <p class="muted">I design and ship AI‑powered products end‑to‑end — from data and modeling to delightful, responsive UIs.</p>
+        <div class="chips">
+          <span class="chip">📍 Dhaka, Bangladesh</span>
+          <a class="chip" href="mailto:sumiayapew117@gmail.com">✉️ sumiayapew117@gmail.com</a>
+          <a class="chip" href="tel:+8801998123786">📞 01998123786</a>
+          <a class="chip" href="https://www.linkedin.com/in/sumiaya-ahmed-engr/" target="_blank">🔗 LinkedIn</a>
+        </div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-inner">
+          <div class="wobble">
+            <div style="font-size:72px;">⚡</div>
+            <p class="muted" style="max-width:32ch; margin: 10px auto 0;">Crafting intelligent experiences with clean, modern interfaces.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="card reveal">
+        <h2 class="section-title">About</h2>
+        <p class="muted">I’m an AI‑focused engineer who loves turning messy, real‑world problems into usable, scalable products. I work across the stack: data pipelines; model training & evaluation; RESTful backends; and responsive frontends. My recent work spans LLM agents, business automation, analytics dashboards, and end‑to‑end ML.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="grid grid-3">
+        <div class="card reveal">
+          <h3>Programming</h3>
+          <div class="chips mt-2">
+            <span class="chip">Python</span><span class="chip">Java</span><span class="chip">C</span><span class="chip">SQL</span><span class="chip">NumPy</span><span class="chip">TensorFlow</span><span class="chip">PyTorch</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>AI / Agents & LLMs</h3>
+          <div class="chips mt-2">
+            <span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">MCP</span><span class="chip">GPT/LLaMA/Gemini</span><span class="chip">CNN/DenseNet/ResNet</span><span class="chip">YOLO</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>Data & BI</h3>
+          <div class="chips mt-2">
+            <span class="chip">Advanced Power BI</span><span class="chip">Power Query</span><span class="chip">Advanced Excel</span><span class="chip">Google Sheets</span><span class="chip">DAX</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>Databases</h3>
+          <div class="chips mt-2">
+            <span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">Oracle SQL</span><span class="chip">MongoDB</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>Cloud</h3>
+          <div class="chips mt-2">
+            <span class="chip">Google Cloud</span><span class="chip">Supabase</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>Web Dev</h3>
+          <div class="chips mt-2">
+            <span class="chip">FastAPI</span><span class="chip">Streamlit</span><span class="chip">Django</span><span class="chip">JavaScript</span><span class="chip">Tailwind‑style CSS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-title">Experience</h2>
+      <div class="grid">
+        <div class="card reveal">
+          <div class="row">
+            <div>
+              <h3>AI Developer • SM Technology</h3>
+              <p class="muted">May 2025 – Present</p>
+            </div>
+          </div>
+          <ul class="list">
+            <li>Build full‑stack AI solutions with LLMs, REST APIs, and modern UIs.</li>
+            <li>Lead features involving intelligent agents and business automation.</li>
+            <li>Ship scalable, production‑ready AI systems with cross‑functional teams.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="row">
+            <div>
+              <h3>University Teaching Assistant • East West University</h3>
+              <p class="muted">Feb 2023 – Jul 2024</p>
+            </div>
+          </div>
+          <ul class="list">
+            <li>Supported coursework, labs, and student mentoring in CSE.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+<article class="card reveal">
+<div class="row">
+<h3>PixieGPT — Generative Transformer for Bangladeshi Universities</h3>
+<span class="muted" style="font-size:12px">Jun 2023 – Aug 2024</span>
+</div>
+<p class="muted mt-2">Built a domain chatbot that automates responses to university queries; collected website data, fine‑tuned T5 and Mistral‑7B (QLoRA), and deployed for real‑time use.</p>
+<div class="chips mt-4"><span class="pill">T5</span><span class="pill">Mistral‑7B</span><span class="pill">QLoRA</span><span class="pill">Streamlit</span></div>
+</article>
+<article class="card reveal">
+<div class="row">
+<h3>EmailSummarizer — Intelligent Email Summarization Agent</h3>
+<span class="muted" style="font-size:12px">Jun 2025 – Jul 2025</span>
+</div>
+<p class="muted mt-2">Batch processes Gmail to generate concise summaries, syncs to Google Sheets, and provides a Streamlit dashboard for control.</p>
+<div class="chips mt-4"><span class="pill">LLaMA 3</span><span class="pill">Groq API</span><span class="pill">FastAPI</span><span class="pill">Streamlit</span></div>
+</article>
+<article class="card reveal">
+<div class="row">
+<h3>PsychoHealer — AI‑Powered Psychology Assistant</h3>
+<span class="muted" style="font-size:12px">Jun 2025</span>
+</div>
+<p class="muted mt-2">Privacy‑first assistant with automatic model selection, crisis detection, and session memory; accessible via web, API, and Telegram.</p>
+<div class="chips mt-4"><span class="pill">LLMs</span><span class="pill">LangChain</span><span class="pill">Async I/O</span><span class="pill">Telegram Bot</span></div>
+</article>
+<article class="card reveal">
+<div class="row">
+<h3>AI Dating App — Semantic Matchmaking Platform</h3>
+<span class="muted" style="font-size:12px">Jun 2025</span>
+</div>
+<p class="muted mt-2">Semantic profile matching, natural language search, compatibility scoring, and smart conversation assistance to boost engagement.</p>
+<div class="chips mt-4"><span class="pill">NLP</span><span class="pill">Sentence Transformers</span><span class="pill">FastAPI</span><span class="pill">Streamlit</span></div>
+</article>
+<article class="card reveal">
+<div class="row">
+<h3>Hospitality Management Data Analysis Dashboard</h3>
+<span class="muted" style="font-size:12px">Feb 2025 – Mar 2025</span>
+</div>
+<p class="muted mt-2">Interactive BI dashboard for hospitality metrics, with data cleaning, modeling, and KPI insights to optimize revenue.</p>
+<div class="chips mt-4"><span class="pill">Power BI</span><span class="pill">DAX</span><span class="pill">Data Modeling</span></div>
+</article>
+<article class="card reveal">
+<div class="row">
+<h3>RFM Segmentation & Cohort Analysis on Sales Data</h3>
+<span class="muted" style="font-size:12px">Mar 2025 – Apr 2025</span>
+</div>
+<p class="muted mt-2">Customer segmentation to identify high‑value customers and retention trends; star schema modeling and DAX for decision support.</p>
+<div class="chips mt-4"><span class="pill">Power BI</span><span class="pill">RFM</span><span class="pill">Cohort</span></div>
+</article>
+<article class="card reveal">
+<div class="row">
+<h3>Mental Health Classification & BMI Prediction</h3>
+<span class="muted" style="font-size:12px">Jun 2023 – Aug 2023</span>
+</div>
+<p class="muted mt-2">Built ML models to classify mental health conditions (83% acc.) and predict BMI (low error) using tuned models and Grid Search.</p>
+<div class="chips mt-4"><span class="pill">Scikit‑learn</span><span class="pill">Classification</span><span class="pill">Regression</span></div>
+</article>
+<article class="card reveal">
+<div class="row">
+<h3>Sentiment Analysis using BERT, RoBERTa, and Phi‑2</h3>
+<span class="muted" style="font-size:12px">Nov 2023 – Dec 2023</span>
+</div>
+<p class="muted mt-2">Developed a transformer‑based sentiment classifier with advanced preprocessing, word‑clouds and n‑gram analysis, and balanced training.</p>
+<div class="chips mt-4"><span class="pill">Transformers</span><span class="pill">NLP</span></div>
+</article>
+</div>
+</div>
+</section>
+  <!-- Education -->
+  <section id="education">
+    <div class="container">
+      <h2 class="section-title">Education</h2>
+      <div class="grid grid-2">
+        <div class="card reveal">
+          <h3>BSc in Computer Science & Engineering</h3>
+          <p class="muted mt-2">East West University, Dhaka — 2021 – 2025</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container center">
+      <h2 class="section-title">Contact</h2>
+      <p class="muted">Feel free to reach out — I respond quickly!</p>
+      <div class="contact-actions">
+        <a class="chip" href="mailto:sumiayapew117@gmail.com">✉️ Email</a>
+        <a class="chip" href="tel:+8801998123786">📞 Phone</a>
+        <a class="chip" href="https://www.linkedin.com/in/sumiaya-ahmed-engr/" target="_blank">🔗 LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Sumaiya Ahmed — All rights reserved.</p>
+  </footer>
+
+  <!-- —— JS —— -->
+  <script>
+    // Smooth scroll to section
+    function scrollToId(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+
+    // Reveal on scroll
+    function revealOnScroll() {
+      document.querySelectorAll('.reveal').forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 80) el.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
+</body>
+</html>
